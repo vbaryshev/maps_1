@@ -48,7 +48,16 @@ const deckgl = new deck.DeckGL({
 
  //   }
     getCursor: ({isHovering, isDragging}) => isHovering ? "pointer" : isDragging ? "grabbing" : "grab",//изменение курсора
-    layers: [   
+    layers: [
+        new deck.GeoJsonLayer({
+            id: "countries", //комментарий параметры стиля полигона
+            data: "./data/mos_mo_poi.geojson",
+            stroked: true,
+            getLineColor: [255,255,255],
+            lineWidthMinPixels: 1,
+            filled: true,
+            getFillColor: (feature) => getColor(feature.properties.mosstat_po)
+        }),   
         new deck.GeoJsonLayer({ //Добавление нового слоя с реками, полигон
             id: "rivers_poly",
             data: "./data/water_mo.geojson",
@@ -64,15 +73,6 @@ const deckgl = new deck.DeckGL({
             lineWidthUnits: "pixels", // Единицы измерения ширины линии
             lineWidthScale: 0.25 // Масштаб ширины линии
             //getLineColor: [80,50,125]
-        }),
-        new deck.GeoJsonLayer({
-            id: "countries", //комментарий параметры стиля полигона
-            data: "./data/mos_mo_poi.geojson",
-            stroked: true,
-            getLineColor: [255,255,255],
-            lineWidthMinPixels: 1,
-            filled: true,
-            getFillColor: (feature) => getColor(feature.properties.mosstat_po)
         }),
         new deck.GeoJsonLayer({ //Добавление нового слоя с реками, полигон
             id: "citys",
